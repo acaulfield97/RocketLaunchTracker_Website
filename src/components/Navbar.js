@@ -15,7 +15,7 @@ function Navbar() {
     <>
       <nav className="navbar">
         <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-          RCKT
+          Rocket Tracker
         </Link>
         <div className="menu-icon" onClick={handleClick}>
           <FontAwesomeIcon icon={click ? faTimes : faBars} />

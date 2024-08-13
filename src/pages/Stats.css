@@ -1,31 +1,55 @@
-/* Stats.css */
+
+@font-face {
+    font-family: 'ZenDots';
+    src: url('../assets/fonts/ZenDots-Regular.ttf') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Astro';
+    src: url('../assets/fonts/AstroSpace-eZ2Bg.ttf') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+  }
 
 .stats-container {
     display: flex;
+   
   }
   
   .flight-list {
     width: 25%;
     border-right: 1px solid #ddd;
     padding: 10px;
+    
   }
   
   .flight-item {
     margin-bottom: 10px;
+    
   }
   
   .data-points {
     width: 75%;
     padding: 10px;
     overflow-y: auto;
-    max-height: 80vh; /* Adjust this value based on your needs */
+    max-height: 80vh; 
+    
   }
 
   .list-group-item {
     cursor: pointer;
+    font-family: 'ZenDots';
+    
   }
   
   .list-group-item:hover {
-    background-color: #f1f1f1;
+    background-color: var(--accent);
+  }
+
+  .list-data-points {
+    font-family: 'ZenDots';
+    
   }
   
