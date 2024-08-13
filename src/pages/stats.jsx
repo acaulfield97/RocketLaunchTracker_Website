@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../components/Navbar";
 import { db } from "../firebase-config";
 import { collection, getDocs } from "firebase/firestore";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./Stats.css";
 
 export default function Stats() {
   const [flights, setFlights] = useState([]);
@@ -48,77 +45,107 @@ export default function Stats() {
   };
 
   return (
-    <>
-      <Navbar />
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-4">
-            <div className="list-group">
-              {flights.length > 0 ? (
-                flights.map((flight) => (
+    <div className="mx-auto p-4 ">
+      <div className="flex flex-row gap-4 ">
+        {/* Flight List */}
+        <div className="w-full md:w-1/3 border border-gray-200 rounded-lg shadow-sm">
+          {flights.length > 0 ? (
+            <ul role="list" className="divide-y divide-gray-100 ">
+              {flights.map((flight) => (
+                <li
+                  key={flight.id}
+                  className="py-4 hover:bg-gray-50 font-zendots"
+                >
                   <button
-                    key={flight.id}
-                    className={`list-group-item list-group-item-action ${
+                    className={`text-sm text-gray-900 leading-6 w-full text-left ${
                       expandedFlight && expandedFlight.flightId === flight.id
-                        ? "active"
+                        ? "bg-gray-100 rounded-md"
                         : ""
                     }`}
                     onClick={() => handleFlightClick(flight.id)}
                   >
                     {flight.flightName}
                   </button>
-                ))
-              ) : (
-                <p>No flight data available.</p>
-              )}
-            </div>
-          </div>
-          <div className="col-md-8">
-            {expandedFlight && (
-              <div className="overflow-auto" style={{ maxHeight: "80vh" }}>
-                {expandedFlight.dataPoints.length > 0 ? (
-                  expandedFlight.dataPoints.map((point, index) => (
-                    <div key={index} className="border p-3 mb-2 rounded">
-                      <p>
-                        <strong>Date:</strong> {point.date}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-500 p-4">No flight data available.</p>
+          )}
+        </div>
+
+        {/* Flight Details */}
+        <div className="w-full md:w-2/3 overflow-auto max-h-[80vh] bg-white border border-gray-200 rounded-lg shadow-sm p-4">
+          {expandedFlight ? (
+            expandedFlight.dataPoints.length > 0 ? (
+              expandedFlight.dataPoints.map((point, index) => (
+                <div key={index} className="py-4 border-b last:border-none">
+                  <div className="flex gap-4">
+                    <div className="min-w-0 flex-auto">
+                      <p className="text-sm leading-6 text-gray-900 font-zendots">
+                        <span className="font-zendots text-accent">Date:</span>{" "}
+                        {point.date}
                       </p>
-                      <p>
-                        <strong>Altitude:</strong> {point.altitude}
+                      <p className="text-sm leading-6 text-gray-900 font-zendots">
+                        <span className="font-zendots text-accent">
+                          Altitude (m):
+                        </span>{" "}
+                        {point.altitude}
                       </p>
-                      <p>
-                        <strong>Longitude:</strong> {point.longitude}
+                      <p className="text-sm leading-6 text-gray-900 font-zendots">
+                        <span className="font-zendots text-accent">
+                          Longitude:
+                        </span>{" "}
+                        {point.longitude}
                       </p>
-                      <p>
-                        <strong>Latitude:</strong> {point.latitude}
+                      <p className="text-sm leading-6 text-gray-900 font-zendots">
+                        <span className="font-zendots text-accent">
+                          Latitude:
+                        </span>{" "}
+                        {point.latitude}
                       </p>
-                      <p>
-                        <strong>Time:</strong> {point.time}
+                      <p className="text-sm leading-6 text-gray-900 font-zendots">
+                        <span className="font-zendots text-accent">Time:</span>{" "}
+                        {point.time}
                       </p>
-                      <p>
-                        <strong>Speed:</strong> {point.speed}
+                      <p className="text-sm leading-6 text-gray-900 font-zendots">
+                        <span className="font-zendots text-accent">
+                          Speed (kmph):
+                        </span>{" "}
+                        {point.speed}
                       </p>
-                      <p>
-                        <strong>Satellites In View:</strong>{" "}
+                      <p className="text-sm leading-6 text-gray-900 font-zendots">
+                        <span className="font-zendots text-accent">
+                          Satellites In View:
+                        </span>{" "}
                         {point.satellitesInView}
                       </p>
-                      <p>
-                        <strong>Satellites Being Tracked:</strong>{" "}
+                      <p className="text-sm leading-6 text-gray-900 font-zendots">
+                        <span className="font-zendots text-accent">
+                          Satellites Being Tracked:
+                        </span>{" "}
                         {point.numberOfSatellitesBeingTracked}
                       </p>
-                      <p>
-                        <strong>Fix Quality:</strong> {point.fixQuality}
+                      <p className="text-sm leading-6 text-gray-900 font-zendots">
+                        <span className="font-zendots text-accent">
+                          Fix Quality:
+                        </span>{" "}
+                        {point.fixQuality}
                       </p>
-                      <hr />
                     </div>
-                  ))
-                ) : (
-                  <p>No data points available for this flight.</p>
-                )}
-              </div>
-            )}
-          </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500">
+                No data points available for this flight.
+              </p>
+            )
+          ) : (
+            <p className="text-gray-500">Select a flight to view details.</p>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

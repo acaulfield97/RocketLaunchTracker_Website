@@ -1,3 +1,7 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,13 +9,7 @@
   font-family: 'PT Sans', sans-serif;
 }
 
-.home,
-.services,
-.products,
-.contact-us,
-.sign-up,
-.marketing,
-.consulting {
+.home {
   display: flex;
   height: 90vh;
   align-items: center;
@@ -27,50 +25,19 @@
   font-size: 100px;
 }
 
-.services {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
+@font-face {
+  font-family: 'Astro';
+  src: url('/src/assets/fonts/AstroSpace-eZ2Bg.ttf') format('woff2');
+       
+  font-weight: normal;
+  font-style: normal;
 }
 
-.products {
-  background-position: center;
-  background-size: fill;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
+@font-face {
+  font-family: 'ZenDots';
+  src: url('/src/assets/fonts/ZenDots-Regular.ttf') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-.contact-us {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
-}
 
-.sign-up {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
-}
-
-.marketing {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
-}
-
-.consulting {
-  background-position: bottom;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
-}
