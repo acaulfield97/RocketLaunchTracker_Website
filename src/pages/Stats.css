@@ -1,0 +1,31 @@
+/* Stats.css */
+
+.stats-container {
+    display: flex;
+  }
+  
+  .flight-list {
+    width: 25%;
+    border-right: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  .flight-item {
+    margin-bottom: 10px;
+  }
+  
+  .data-points {
+    width: 75%;
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 80vh; /* Adjust this value based on your needs */
+  }
+
+  .list-group-item {
+    cursor: pointer;
+  }
+  
+  .list-group-item:hover {
+    background-color: #f1f1f1;
+  }
+  
