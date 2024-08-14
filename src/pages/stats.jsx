@@ -1,148 +1,73 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import { useLocation } from "react-router-dom";
 
 export default function Stats() {
-  const [flights, setFlights] = useState([]);
   const [expandedFlight, setExpandedFlight] = useState(null);
+  const location = useLocation();
+  const { state } = location;
 
   useEffect(() => {
-    const getFlightData = async () => {
-      const launchDataCollectionRef = collection(db, "launch_data");
-      const flightDocuments = await getDocs(launchDataCollectionRef);
-
-      let flightData = [];
-
-      for (const doc of flightDocuments.docs) {
-        flightData.push({ flightName: doc.id, id: doc.id }); // Store the document ID and name
-      }
-
-      setFlights(flightData);
-    };
-
-    getFlightData();
-  }, []);
-
-  const handleFlightClick = async (flightId) => {
-    if (expandedFlight && expandedFlight.flightId === flightId) {
-      setExpandedFlight(null); // Collapse if the same flight is clicked again
-      return;
+    if (state && state.flightDataPoints) {
+      setExpandedFlight({ dataPoints: state.flightDataPoints });
     }
-
-    const launchDataPointsCollectionRef = collection(
-      db,
-      `launch_data/${flightId}/launch_data_points`
-    );
-    const launchDataPointsDocs = await getDocs(launchDataPointsCollectionRef);
-
-    let flightDataPoints = [];
-
-    launchDataPointsDocs.forEach((pointDoc) => {
-      flightDataPoints.push(pointDoc.data());
-    });
-
-    setExpandedFlight({ flightId, dataPoints: flightDataPoints });
-  };
+  }, [state]);
 
   return (
-    <div className="mx-auto p-4 ">
-      <div className="flex flex-row gap-4 ">
-        {/* Flight List */}
-        <div className="w-full md:w-1/3 border border-gray-200 rounded-lg shadow-sm">
-          {flights.length > 0 ? (
-            <ul role="list" className="divide-y divide-gray-100 ">
-              {flights.map((flight) => (
-                <li
-                  key={flight.id}
-                  className="py-4 hover:bg-gray-50 font-zendots"
-                >
-                  <button
-                    className={`text-sm text-gray-900 leading-6 w-full text-left ${
-                      expandedFlight && expandedFlight.flightId === flight.id
-                        ? "bg-gray-100 rounded-md"
-                        : ""
-                    }`}
-                    onClick={() => handleFlightClick(flight.id)}
-                  >
-                    {flight.flightName}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-gray-500 p-4">No flight data available.</p>
-          )}
-        </div>
-
+    <div className="mx-auto p-6 max-w-7xl">
+      <div className="flex flex-col md:flex-row gap-6">
         {/* Flight Details */}
-        <div className="w-full md:w-2/3 overflow-auto max-h-[80vh] bg-white border border-gray-200 rounded-lg shadow-sm p-4">
+        <div className="w-full md:w-2/3 overflow-auto max-h-[80vh] bg-white border border-gray-200 rounded-lg shadow-lg p-6">
           {expandedFlight ? (
             expandedFlight.dataPoints.length > 0 ? (
               expandedFlight.dataPoints.map((point, index) => (
-                <div key={index} className="py-4 border-b last:border-none">
-                  <div className="flex gap-4">
+                <div
+                  key={index}
+                  className="py-4 border-b border-gray-200 last:border-none"
+                >
+                  <div className="flex flex-col gap-4">
                     <div className="min-w-0 flex-auto">
-                      <p className="text-sm leading-6 text-gray-900 font-zendots">
-                        <span className="font-zendots text-accent">Date:</span>{" "}
-                        {point.date}
-                      </p>
-                      <p className="text-sm leading-6 text-gray-900 font-zendots">
-                        <span className="font-zendots text-accent">
-                          Altitude (m):
-                        </span>{" "}
-                        {point.altitude}
-                      </p>
-                      <p className="text-sm leading-6 text-gray-900 font-zendots">
-                        <span className="font-zendots text-accent">
-                          Longitude:
-                        </span>{" "}
-                        {point.longitude}
-                      </p>
-                      <p className="text-sm leading-6 text-gray-900 font-zendots">
-                        <span className="font-zendots text-accent">
-                          Latitude:
-                        </span>{" "}
-                        {point.latitude}
-                      </p>
-                      <p className="text-sm leading-6 text-gray-900 font-zendots">
-                        <span className="font-zendots text-accent">Time:</span>{" "}
-                        {point.time}
-                      </p>
-                      <p className="text-sm leading-6 text-gray-900 font-zendots">
-                        <span className="font-zendots text-accent">
-                          Speed (kmph):
-                        </span>{" "}
-                        {point.speed}
-                      </p>
-                      <p className="text-sm leading-6 text-gray-900 font-zendots">
-                        <span className="font-zendots text-accent">
-                          Satellites In View:
-                        </span>{" "}
-                        {point.satellitesInView}
-                      </p>
-                      <p className="text-sm leading-6 text-gray-900 font-zendots">
-                        <span className="font-zendots text-accent">
-                          Satellites Being Tracked:
-                        </span>{" "}
-                        {point.numberOfSatellitesBeingTracked}
-                      </p>
-                      <p className="text-sm leading-6 text-gray-900 font-zendots">
-                        <span className="font-zendots text-accent">
-                          Fix Quality:
-                        </span>{" "}
-                        {point.fixQuality}
-                      </p>
+                      {[
+                        { label: "Date", key: "date" },
+                        { label: "Altitude (m)", key: "altitude" },
+                        { label: "Longitude", key: "longitude" },
+                        { label: "Latitude", key: "latitude" },
+                        { label: "Time", key: "time" },
+                        { label: "Speed (kmph)", key: "speed" },
+                        {
+                          label: "Satellites In View",
+                          key: "satellitesInView",
+                        },
+                        {
+                          label: "Number Of Satellites Being Tracked",
+                          key: "numberOfSatellitesBeingTracked",
+                        },
+                        { label: "Fix Quality", key: "fixQuality" },
+                      ].map(({ label, key }) => (
+                        <p
+                          key={key}
+                          className="text-sm leading-6 text-gray-800"
+                        >
+                          <span className="font-semibold text-blue-600">
+                            {label}:
+                          </span>{" "}
+                          {point[key] !== undefined && point[key] !== null
+                            ? point[key]
+                            : "N/A"}
+                        </p>
+                      ))}
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-gray-500">
+              <p className="text-gray-500 text-center">
                 No data points available for this flight.
               </p>
             )
           ) : (
-            <p className="text-gray-500">Select a flight to view details.</p>
+            <p className="text-gray-500 text-center">
+              Select a flight to view details.
+            </p>
           )}
         </div>
       </div>
