@@ -1,22 +1,23 @@
 import "./App.css";
-import Navbar from "./components/Navbar";
-import Home from "./pages/home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Stats from "./pages/stats";
-import "bootstrap/dist/css/bootstrap.min.css";
+import Graphs from "./pages/Graphs";
+import Navbar from "./components/Navbar";
+import { FlightDataProvider } from "./contexts/FlightDataContext";
 
 function App() {
   return (
-    <>
-      <Router>
-        <Navbar />
-        <Stats />
-        {/* <Routes> */}
-        {/* <Route path="/" exact /> */}
-        {/* <Route path="/stats" /> */}
-        {/* </Routes> */}
-      </Router>
-    </>
+    <Router>
+      <FlightDataProvider>
+        <div>
+          <Navbar />
+          <Routes>
+            <Route path="/rawdata" element={<Stats />} />
+            <Route path="/graphs" element={<Graphs />} />
+          </Routes>
+        </div>
+      </FlightDataProvider>
+    </Router>
   );
 }
 
