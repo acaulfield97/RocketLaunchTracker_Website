@@ -38,7 +38,7 @@ export default function Graphs() {
 
   const handleViewRawData = async (flightId) => {
     const flightDataPoints = await getFlightDataPoints(flightId);
-    navigate("/rawdata", { state: { flightDataPoints } }); // Pass data to Stats page
+    navigate("/rawdata", { state: { flightDataPoints } }); // Pass data to raw data page
   };
 
   const formatTime = (timestamp) => {
@@ -68,7 +68,9 @@ export default function Graphs() {
         {/* Flight List */}
         <div className="w-full md:w-1/3 bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
           <div className="p-4 border-b border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-800">Flight List</h3>
+            <h3 className="text-lg font-semibold text-gray-800 font-astro">
+              Flight List
+            </h3>
           </div>
           {flights.length > 0 ? (
             <ul role="list" className="divide-y divide-gray-200">
@@ -79,7 +81,7 @@ export default function Graphs() {
                 >
                   <div className="flex justify-between items-center">
                     <button
-                      className={`text-sm text-gray-900 leading-6 w-full text-left ${
+                      className={`font-zendots text-sm text-gray-900 leading-6 w-full text-left ${
                         expandedFlight && expandedFlight.flightId === flight.id
                           ? "bg-gray-100 rounded-md"
                           : ""
@@ -89,7 +91,7 @@ export default function Graphs() {
                       {flight.flightName}
                     </button>
                     <button
-                      className="ml-4 text-blue-600 hover:underline"
+                      className="ml-4 text-accent hover:underline font-zendots"
                       onClick={() => handleViewRawData(flight.id)}
                     >
                       View Raw Data
@@ -99,7 +101,7 @@ export default function Graphs() {
               ))}
             </ul>
           ) : (
-            <p className="text-gray-500 p-4 text-center">
+            <p className="text-gray-500 p-4 text-center font-zendots">
               No flight data available.
             </p>
           )}
@@ -109,7 +111,7 @@ export default function Graphs() {
         <div className="w-full md:w-2/3 space-y-6">
           {/* Satellites In View / Satellites Tracked Graph */}
           <div>
-            <h4 className="text-xl font-semibold text-gray-800">
+            <h4 className="text-xl text-darkPurple font-zendots">
               Satellites In View / Satellites Tracked
             </h4>
             <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4">
@@ -144,7 +146,7 @@ export default function Graphs() {
 
           {/* Speed Graph */}
           <div>
-            <h4 className="text-xl font-semibold text-gray-800">Speed</h4>
+            <h4 className="text-xl font-zendots text-darkPurple">Speed</h4>
             <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4">
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart
@@ -170,7 +172,7 @@ export default function Graphs() {
 
           {/* Altitude Graph */}
           <div>
-            <h4 className="text-xl font-semibold text-gray-800">Altitude</h4>
+            <h4 className="text-xl font-zendots text-darkPurple">Altitude</h4>
             <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4">
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart
@@ -196,7 +198,7 @@ export default function Graphs() {
 
           {/* Map Component */}
           <div>
-            <h4 className="text-xl font-semibold text-gray-800">Map</h4>
+            <h4 className="text-xl font-zendots text-darkPurple">Map</h4>
             <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4">
               <div style={{ height: "400px" }}>
                 <Map />
