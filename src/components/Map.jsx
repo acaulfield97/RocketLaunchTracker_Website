@@ -14,7 +14,6 @@ const Map = () => {
     mapboxgl.accessToken =
       "pk.eyJ1IjoiYWNhdWxmaWVsZDk3IiwiYSI6ImNseGxyeWNycjAwbHoyanNrYXl1MHp2cncifQ.TnmB8BQ4SfL5wDpTerOGcQ";
 
-    // Function to initialize the map
     const initialiseMap = (lng, lat) => {
       if (mapContainerRef.current) {
         mapRef.current = new mapboxgl.Map({
@@ -30,8 +29,6 @@ const Map = () => {
             mapRef.current.addImage("custom-marker", image);
 
             if (data && Array.isArray(data) && data.length > 0) {
-              console.log("Flight data loaded:", data);
-
               // Add layer with custom marker image
               mapRef.current.addLayer({
                 id: "markers",
@@ -69,22 +66,15 @@ const Map = () => {
       }
     };
 
-    // Check if geolocation is available and get user's location
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { longitude, latitude } = position.coords;
-          initialiseMap(longitude, latitude);
-        },
-        (error) => {
-          console.error("Error retrieving location:", error);
-          initialiseMap(-74.006, 40.7128); // New York City as fallback
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-      initialiseMap(-74.006, 40.7128); // New York City as fallback
-    }
+    const firstValidLocation = data?.find(
+      (flight) => flight.longitude && flight.latitude
+    );
+    const initialCenter = firstValidLocation
+      ? [firstValidLocation.longitude, firstValidLocation.latitude]
+      : [-5.93012, 54.5964]; // Belfast default coordinates
+
+    // Initialize the map with either the first valid location or Belfast
+    initialiseMap(...initialCenter);
 
     // Cleanup on component unmount
     return () => {
