@@ -73,7 +73,7 @@ const Map = () => {
       ? [firstValidLocation.longitude, firstValidLocation.latitude]
       : [-5.93012, 54.5964]; // Belfast default coordinates
 
-    // Initialize the map with either the first valid location or Belfast
+    // Initialise the map with either the first valid location or Belfast
     initialiseMap(...initialCenter);
 
     // Cleanup on component unmount
