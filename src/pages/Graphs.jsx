@@ -41,25 +41,31 @@ export default function Graphs() {
     navigate("/rawdata", { state: { flightDataPoints } }); // Pass data to raw data page
   };
 
-  const formatTime = (timestamp) => {
-    if (!timestamp) return "No time available";
-    const [dateStr, timeStr] = timestamp.split("T");
-    if (!timeStr) return "Invalid Time";
-    const time = timeStr.split(".")[0].replace(/:/g, "");
-    return `${time.slice(0, 2)}:${time.slice(2, 4)}:${time.slice(4, 6)}`;
+  const formatXAxis = (tickItem) => {
+    // format the tick labels for readability
+    const hour = tickItem.slice(0, 2);
+    const minute = tickItem.slice(2, 4);
+    const second = tickItem.slice(4, 6);
+    return `${hour}:${minute}:${second}`;
   };
 
   const formatData = (flightData) =>
     flightData.map((entry) => ({
-      time: formatTime(entry.timestamp),
+      time: entry.time.toString(),
       altitude: entry.altitude,
       speed: entry.speed,
       satellitesInView: entry.satellitesInView,
       satellitesBeingTracked: entry.numberOfSatellitesBeingTracked,
     }));
 
+  const sortDataByTime = (data) => {
+    return data.slice().sort((a, b) => {
+      return a.time.localeCompare(b.time);
+    });
+  };
+
   const formattedData = expandedFlight
-    ? formatData(expandedFlight.dataPoints)
+    ? sortDataByTime(formatData(expandedFlight.dataPoints))
     : [];
 
   return (
@@ -121,7 +127,7 @@ export default function Graphs() {
                   margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="time" />
+                  <XAxis dataKey="time" tickFormatter={formatXAxis} />
                   <YAxis />
                   <Tooltip />
                   <Legend />
@@ -154,7 +160,7 @@ export default function Graphs() {
                   margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="time" />
+                  <XAxis dataKey="time" tickFormatter={formatXAxis} />
                   <YAxis />
                   <Tooltip />
                   <Legend />
@@ -180,7 +186,7 @@ export default function Graphs() {
                   margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="time" />
+                  <XAxis dataKey="time" tickFormatter={formatXAxis} />
                   <YAxis />
                   <Tooltip />
                   <Legend />
