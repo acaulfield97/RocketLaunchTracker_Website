@@ -11,8 +11,15 @@ const Map = () => {
   const { flightData: data } = useFlightData();
 
   useEffect(() => {
-    mapboxgl.accessToken =
-      "pk.eyJ1IjoiYWNhdWxmaWVsZDk3IiwiYSI6ImNseGxyeWNycjAwbHoyanNrYXl1MHp2cncifQ.TnmB8BQ4SfL5wDpTerOGcQ";
+    // Access the Mapbox token from the environment variable
+    const MAPBOX_PUBLIC_TOKEN = process.env.REACT_APP_MAPBOX_PUBLIC_TOKEN;
+
+    if (!MAPBOX_PUBLIC_TOKEN) {
+      console.error("Mapbox token is not defined.");
+      return;
+    }
+
+    mapboxgl.accessToken = MAPBOX_PUBLIC_TOKEN;
 
     const initialiseMap = (lng, lat) => {
       if (mapContainerRef.current) {
