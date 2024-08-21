@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "@firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyATTzcR2oaQmt9yIa6wc9JPcnanqKp7nxI",
-  authDomain: "rocket-launch-tracker-c490b.firebaseapp.com",
-  projectId: "rocket-launch-tracker-c490b",
-  storageBucket: "rocket-launch-tracker-c490b.appspot.com",
-  messagingSenderId: "561432325554",
-  appId: "1:561432325554:web:cad1e19778a10318f908ab",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
