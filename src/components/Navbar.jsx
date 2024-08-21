@@ -62,11 +62,11 @@ function Navbar() {
           </li>
           <li className="border-b border-gray-700">
             <Link
-              to="/sign-up"
+              to="/graphs"
               className="text-white no-underline py-4 hover:bg-light block"
               onClick={closeMobileMenu}
             >
-              Sign Up
+              Flight Charts
             </Link>
           </li>
         </ul>
