@@ -204,7 +204,9 @@ export default function Graphs() {
 
           {/* Map Component */}
           <div>
-            <h4 className="text-xl font-zendots text-darkPurple">Map</h4>
+            <h4 className="text-xl font-zendots text-darkPurple">
+              Flight Path
+            </h4>
             <div className="bg-white border border-gray-200 rounded-lg shadow-md p-4">
               <div style={{ height: "400px" }}>
                 <Map />
