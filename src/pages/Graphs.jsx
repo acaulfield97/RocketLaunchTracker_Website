@@ -42,11 +42,25 @@ export default function Graphs() {
   };
 
   const formatXAxis = (tickItem) => {
-    // format the tick labels for readability
-    const hour = tickItem.slice(0, 2);
-    const minute = tickItem.slice(2, 4);
-    const second = tickItem.slice(4, 6);
-    return `${hour}:${minute}:${second}`;
+    // Ensure the tickItem is always 6 characters long by padding with leading zeros
+    const paddedTime = tickItem.padStart(6, "0");
+
+    const hour = paddedTime.slice(0, 2);
+    const minute = paddedTime.slice(2, 4);
+    const second = paddedTime.slice(4, 6);
+
+    // Validate that the hour, minute, and second are within the correct ranges
+    const validHour = Math.min(parseInt(hour, 10), 23)
+      .toString()
+      .padStart(2, "0");
+    const validMinute = Math.min(parseInt(minute, 10), 59)
+      .toString()
+      .padStart(2, "0");
+    const validSecond = Math.min(parseInt(second, 10), 59)
+      .toString()
+      .padStart(2, "0");
+
+    return `${validHour}:${validMinute}:${validSecond}`;
   };
 
   const formatData = (flightData) =>
